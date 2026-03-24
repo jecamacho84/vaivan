@@ -6,6 +6,8 @@ use App\Enums\UserRole;
 use App\Services\Tenancy\BelongsToCompany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -17,6 +19,9 @@ class User extends Authenticatable
     use Notifiable;
     use BelongsToCompany;
 
+    protected $fillable = ['company_id', 'name', 'email', 'password', 'role', 'is_active'];
+
+    protected $hidden = ['password', 'remember_token'];
     protected $fillable = [
         'company_id',
         'name',
@@ -41,6 +46,9 @@ class User extends Authenticatable
         ];
     }
 
+    public function company(): BelongsTo { return $this->belongsTo(Company::class); }
+    public function driverProfile(): HasMany { return $this->hasMany(Driver::class); }
+    public function guardianProfile(): HasMany { return $this->hasMany(Guardian::class); }
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
