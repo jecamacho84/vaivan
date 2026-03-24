@@ -17,6 +17,7 @@ use App\Models\TripPassenger;
 use App\Models\Vehicle;
 use App\Models\VehicleLocation;
 use App\Policies\CompanyScopedPolicy;
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -58,5 +59,18 @@ class AuthServiceProvider extends ServiceProvider
 
             return $companyId !== null && $companyId === $user->company_id;
         });
+
+    public function boot(): void
+    {
+        Gate::define('manage-company', fn ($user): bool => in_array($user->role, [
+            UserRole::SuperAdmin,
+            UserRole::CompanyAdmin,
+        ], true));
+
+        Gate::define('manage-operations', fn ($user): bool => in_array($user->role, [
+            UserRole::SuperAdmin,
+            UserRole::CompanyAdmin,
+            UserRole::CompanyOperator,
+        ], true));
     }
 }

@@ -21,6 +21,19 @@ class User extends Authenticatable
     protected $fillable = ['company_id', 'name', 'email', 'password', 'role', 'is_active'];
 
     protected $hidden = ['password', 'remember_token'];
+    protected $fillable = [
+        'company_id',
+        'name',
+        'email',
+        'password',
+        'role',
+        'is_active',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     protected function casts(): array
     {
@@ -54,5 +67,14 @@ class User extends Authenticatable
     public function hasCompanyScope(): bool
     {
         return ! $this->isSuperAdmin();
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === UserRole::SuperAdmin;
     }
 }

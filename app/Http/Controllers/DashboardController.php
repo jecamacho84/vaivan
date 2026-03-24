@@ -24,5 +24,8 @@ class DashboardController extends Controller
         ];
 
         return view('admin.dashboard.index', compact('stats'));
+    public function __invoke(): View
+    {
+        return view('admin.dashboard.index');
     }
 }

@@ -27,4 +27,16 @@ class Company extends Model
     public function payments(): HasMany { return $this->hasMany(Payment::class); }
     public function subscriptions(): HasMany { return $this->hasMany(Subscription::class); }
     public function notifications(): HasMany { return $this->hasMany(Notification::class); }
+
+  protected $fillable = [
+        'name',
+        'trade_name',
+        'document',
+        'is_active',
+    ];
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }

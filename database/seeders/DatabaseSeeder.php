@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+=======
+use Illuminate\Database\Seeder;
+
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
@@ -33,5 +36,8 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ]
         );
+
+            SuperAdminSeeder::class,
+        ]);
     }
 }

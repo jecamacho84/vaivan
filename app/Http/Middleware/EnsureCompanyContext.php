@@ -32,6 +32,8 @@ class EnsureCompanyContext
         }
 
         if (! $user->company_id) {
+
+        if ($user->role !== UserRole::SuperAdmin && ! $user->company_id) {
             abort(403, 'Usuário sem vínculo de empresa.');
         }
 

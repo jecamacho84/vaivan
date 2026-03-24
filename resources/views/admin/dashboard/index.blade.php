@@ -10,5 +10,7 @@
             <li>Rotas: {{ $stats['routes'] ?? 0 }}</li>
             <li>Viagens: {{ $stats['trips'] ?? 0 }}</li>
         </ul>
+
+        <p>Estrutura inicial da Fase 1 pronta com contexto multiempresa e perfis base.</p>
     </div>
 @endsection
