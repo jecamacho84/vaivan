@@ -7,7 +7,6 @@ use App\Services\Tenancy\BelongsToCompany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -49,6 +48,26 @@ class User extends Authenticatable
     public function company(): BelongsTo { return $this->belongsTo(Company::class); }
     public function driverProfile(): HasMany { return $this->hasMany(Driver::class); }
     public function guardianProfile(): HasMany { return $this->hasMany(Guardian::class); }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === UserRole::SuperAdmin;
+    }
+
+    public function isCompanyAdmin(): bool
+    {
+        return $this->role === UserRole::CompanyAdmin;
+    }
+
+    public function isCompanyOperator(): bool
+    {
+        return $this->role === UserRole::CompanyOperator;
+    }
+
+    public function hasCompanyScope(): bool
+    {
+        return ! $this->isSuperAdmin();
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

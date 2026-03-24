@@ -56,7 +56,14 @@ Entidades modeladas com migrations, FKs e relacionamentos Eloquent:
 - Admin da empresa demo: `admin.demo@vaivan.com`
 
 > Senha inicial dos usuários seed: `ChangeMe123!` (trocar no primeiro acesso)
-=======
+
+### Isolamento multiempresa no backend
+
+- `BelongsToCompany` aplica escopo global por `company_id` em models de domínio.
+- `EnsureCompanyContext` inicializa o contexto do tenant por request e bloqueia usuários inválidos.
+- `AuthServiceProvider` registra `Gate::before` para `super_admin`, gates operacionais e policy compartilhada para recursos com `company_id`.
+- `CompanyAccessService` e trait `AuthorizesCompanyAccess` padronizam queries e autorização nos controllers/services.
+
 # VaiVan - MVP SaaS (Fase 1)
 
 Base inicial do projeto **VaiVan** com foco em Laravel 11, multiempresa e organização para evolução por fases.
