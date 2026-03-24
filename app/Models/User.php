@@ -7,6 +7,7 @@ use App\Services\Tenancy\BelongsToCompany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -21,6 +22,19 @@ class User extends Authenticatable
     protected $fillable = ['company_id', 'name', 'email', 'password', 'role', 'is_active'];
 
     protected $hidden = ['password', 'remember_token'];
+    protected $fillable = [
+        'company_id',
+        'name',
+        'email',
+        'password',
+        'role',
+        'is_active',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     protected function casts(): array
     {
@@ -35,6 +49,10 @@ class User extends Authenticatable
     public function company(): BelongsTo { return $this->belongsTo(Company::class); }
     public function driverProfile(): HasMany { return $this->hasMany(Driver::class); }
     public function guardianProfile(): HasMany { return $this->hasMany(Guardian::class); }
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
 
     public function isSuperAdmin(): bool
     {
